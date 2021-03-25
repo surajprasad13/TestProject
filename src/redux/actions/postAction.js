@@ -1,4 +1,4 @@
-import { FETCH_POST, LOADING } from "./types";
+import { FETCH_POST, FETCH_USERS, LOADING } from "./types";
 
 import api from "../../api";
 
@@ -12,4 +12,14 @@ const fetchPosts = () => async (dispatch) => {
   }
 };
 
-export { fetchPosts };
+const fetchUsers = () => async (dispatch) => {
+  try {
+    dispatch({ type: LOADING });
+    const response = await api.get("users");
+    dispatch({ type: FETCH_USERS, payload: response.data });
+  } catch (e) {
+    throw e;
+  }
+};
+
+export { fetchPosts, fetchUsers };

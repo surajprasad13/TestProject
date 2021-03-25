@@ -7,6 +7,10 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import BoardUser from "./pages/BoardUser";
+import Users from "./pages/Users";
+import Posts from "./pages/Posts";
+
+import { Footer } from "./components";
 
 import { logout } from "./redux/actions/authAction";
 import { clearMessage } from "./redux/actions/messageAction";
@@ -40,81 +44,66 @@ const App = () => {
   return (
     <Router history={history}>
       <div>
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <Link to={"/"} className="navbar-brand">
-            bezKoder
-          </Link>
-          <div className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link to={"/home"} className="nav-link">
-                Home
-              </Link>
-            </li>
-
-            {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/mod"} className="nav-link">
-                  Moderator Board
-                </Link>
-              </li>
-            )}
-
-            {showAdminBoard && (
-              <li className="nav-item">
-                <Link to={"/admin"} className="nav-link">
-                  Admin Board
-                </Link>
-              </li>
-            )}
+        <div className="ui top fixed menu">
+          <div className="ui item">
+            <Link to={"/"} className="ui item">
+              Suraj Prasad
+            </Link>
+          </div>
+          <div className="ui item">
+            <Link to={"/home"} className="ui item">
+              Home
+            </Link>
 
             {currentUser && (
-              <li className="nav-item">
-                <Link to={"/user"} className="nav-link">
-                  User
+              <>
+                <Link to={"/users"} className="ui item">
+                  Users
                 </Link>
-              </li>
+                <Link to={"/posts"} className="ui item">
+                  Posts
+                </Link>
+                <Link to={"/profile"} className="ui item">
+                  Profile
+                </Link>
+              </>
             )}
           </div>
 
           {currentUser ? (
-            <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/profile"} className="nav-link">
-                  {currentUser.username}
-                </Link>
-              </li>
-              <li className="nav-item">
-                <a href="/login" className="nav-link" onClick={logOut}>
-                  LogOut
-                </a>
-              </li>
+            <div className="ui item">
+              <Link to={"/profile"} className="ui item">
+                {currentUser.username}
+              </Link>
+
+              <a href="/login" className="ui item" onClick={logOut}>
+                LogOut
+              </a>
             </div>
           ) : (
-            <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/login"} className="nav-link">
-                  Login
-                </Link>
-              </li>
+            <div className="ui item">
+              <Link to={"/login"} className="ui item">
+                Login
+              </Link>
 
-              <li className="nav-item">
-                <Link to={"/register"} className="nav-link">
-                  Sign Up
-                </Link>
-              </li>
+              <Link to={"/register"} className="ui item">
+                Sign Up
+              </Link>
             </div>
           )}
-        </nav>
+        </div>
 
-        <div className="ui container">
+        <div className="ui container" style={{ marginTop: "100px" }}>
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
-            <Route path="/user" component={BoardUser} />
+            <Route path="/users" component={Users} />
+            <Route path="/posts" component={Posts} />
           </Switch>
         </div>
+        <Footer />
       </div>
     </Router>
   );

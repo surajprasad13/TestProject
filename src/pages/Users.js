@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import faker from "faker";
 //redux
-import { fetchUsers } from "../redux/actions/authAction";
+import { fetchUsers } from "../redux/actions/postAction";
 import { connect } from "react-redux";
 
 const Users = ({ fetchUsers, users }) => {
