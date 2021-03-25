@@ -1,28 +1,123 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
-const Login = () => {
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+
+import { login } from "../redux/actions/authAction";
+
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className="ui pointing red basic label" role="alert">
+        This field is required!
+      </div>
+    );
+  }
+};
+
+const Login = (props) => {
+  const form = useRef();
+  const checkBtn = useRef();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.message);
+
+  const dispatch = useDispatch();
+
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email);
+  };
+
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    form.current.validateAll();
+
+    if (checkBtn.current.context._errors.length === 0) {
+      dispatch(login(email, password))
+        .then(() => {
+          props.history.push("/profile");
+          window.location.reload();
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  };
+
+  if (isLoggedIn) {
+    return <Redirect to="/profile" />;
+  }
+
   return (
-    <div className="ui container segment">
+    <div className="ui segment" style={{ marginBottom: "100px" }}>
       <h1>Login</h1>
-      <form className="ui form">
-        <div className="field">
-          <label>Email</label>
-          <input type="text" name="first-name" placeholder="First Name" />
-        </div>
-        <div className="field">
-          <label>Password</label>
-          <input type="text" name="last-name" placeholder="Last Name" />
-        </div>
-        <div className="field">
-          <div className="ui checkbox">
-            <input type="checkbox" tabindex="0" className="hidden" />
-            <label>I agree to the Terms and Conditions</label>
+      <div className=" ui ">
+        <h3>Email:eve.holt@reqres.in</h3>
+        <h3>Password:cityslicka</h3>
+        <img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="profile-img" className="profile-img-card" />
+
+        <Form onSubmit={handleLogin} ref={form}>
+          <div className="ui form">
+            <div className="field">
+              <label htmlFor="email">Email</label>
+              <Input
+                type="text"
+                className="ui input"
+                name="email"
+                value={email}
+                onChange={onChangeEmail}
+                validations={[required]}
+              />
+            </div>
+
+            <div className="field">
+              <label htmlFor="password">Password</label>
+              <Input
+                type="password"
+                className="ui input"
+                name="password"
+                value={password}
+                onChange={onChangePassword}
+                validations={[required]}
+              />
+            </div>
+
+            <div className="field">
+              <button className="ui button " disabled={loading}>
+                {loading && <button className="ui loading button" />}
+                <span>Login</span>
+              </button>
+            </div>
+
+            {message && (
+              <div className="ui item">
+                <div className="ui danger" role="alert">
+                  {message}
+                </div>
+              </div>
+            )}
+            <CheckButton style={{ display: "none" }} ref={checkBtn} />
           </div>
-        </div>
-        <button className="ui button" type="submit">
-          Submit
-        </button>
-      </form>
+        </Form>
+      </div>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import BoardUser from "./pages/BoardUser";
 import Users from "./pages/Users";
 import Posts from "./pages/Posts";
+import SinglePost from "./pages/SinglePost";
 
 import { Footer } from "./components";
 
@@ -30,12 +31,7 @@ const App = () => {
     });
   }, [dispatch]);
 
-  useEffect(() => {
-    if (currentUser) {
-      setShowModeratorBoard(currentUser.roles.includes("ROLE_MODERATOR"));
-      setShowAdminBoard(currentUser.roles.includes("ROLE_ADMIN"));
-    }
-  }, [currentUser]);
+  useEffect(() => {}, [currentUser]);
 
   const logOut = () => {
     dispatch(logout());
@@ -73,7 +69,7 @@ const App = () => {
           {currentUser ? (
             <div className="ui item">
               <Link to={"/profile"} className="ui item">
-                {currentUser.username}
+                Suraj
               </Link>
 
               <a href="/login" className="ui item" onClick={logOut}>
@@ -101,6 +97,7 @@ const App = () => {
             <Route exact path="/profile" component={Profile} />
             <Route path="/users" component={Users} />
             <Route path="/posts" component={Posts} />
+            <Route exact path="/posts/id" component={SinglePost} />
           </Switch>
         </div>
         <Footer />
