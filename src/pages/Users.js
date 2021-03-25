@@ -38,7 +38,7 @@ const Users = ({ fetchUsers, users }) => {
 };
 
 const mapStateToProps = (state) => ({
-  users: state.auth.users,
+  users: state.post.users,
 });
 
 export default connect(mapStateToProps, { fetchUsers })(Users);

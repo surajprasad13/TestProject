@@ -1,29 +1,42 @@
-import { FETCH_USERS, LOADING, LOGIN_FAIL, LOGIN_SUCCESS, REGISTER_FAIL, REGISTER_SUCCESS } from "../actions/types";
+import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from "../actions/types";
 
-const initial_state = {
-  loading: false,
-  email: "",
-  password: "",
-  message: "",
-  error: "",
-  users: [],
-};
+const user = JSON.parse(localStorage.getItem("user"));
 
-export default (state = initial_state, action) => {
-  switch (action.type) {
-    case LOADING:
-      return { ...state, loading: true };
-    case LOGIN_FAIL:
-      return { ...state, error: action.payload, loading: false };
-    case LOGIN_SUCCESS:
-      return { ...state, message: action.payload, loading: false };
-    case REGISTER_FAIL:
-      return { ...state, error: action.payload, loading: false };
+const initialState = user ? { isLoggedIn: true, user } : { isLoggedIn: false, user: null };
+
+export default function (state = initialState, action) {
+  const { type, payload } = action;
+
+  switch (type) {
     case REGISTER_SUCCESS:
-      return { ...state, message: action.payload, loading: false };
-    case FETCH_USERS:
-      return { ...state, users: action.payload, loading: false };
+      return {
+        ...state,
+        isLoggedIn: false,
+      };
+    case REGISTER_FAIL:
+      return {
+        ...state,
+        isLoggedIn: false,
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        isLoggedIn: true,
+        user: payload.user,
+      };
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: null,
+      };
     default:
       return state;
   }
-};
+}

@@ -1,31 +1,71 @@
-import { FETCH_USERS, LOADING } from "./types";
+import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, SET_MESSAGE } from "./types";
 
-import api from "../../api";
+import AuthService from "../../services/auth";
 
-const loginUser = () => async (dispatch) => {
-  try {
-    const response = await api.get("users");
-  } catch (e) {
-    throw e;
-  }
+export const register = (username, email, password) => (dispatch) => {
+  return AuthService.register(username, email, password).then(
+    (response) => {
+      dispatch({
+        type: REGISTER_SUCCESS,
+      });
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: response.data.message,
+      });
+
+      return Promise.resolve();
+    },
+    (error) => {
+      const message =
+        (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+
+      dispatch({
+        type: REGISTER_FAIL,
+      });
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: message,
+      });
+
+      return Promise.reject();
+    }
+  );
 };
 
-const registerUser = () => async (dispatch) => {
-  try {
-    const response = await api.get("users");
-  } catch (e) {
-    throw e;
-  }
+export const login = (username, password) => (dispatch) => {
+  return AuthService.login(username, password).then(
+    (data) => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: { user: data },
+      });
+
+      return Promise.resolve();
+    },
+    (error) => {
+      const message =
+        (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+
+      dispatch({
+        type: LOGIN_FAIL,
+      });
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: message,
+      });
+
+      return Promise.reject();
+    }
+  );
 };
 
-const fetchUsers = () => async (dispatch) => {
-  try {
-    dispatch({ type: LOADING });
-    const response = await api.get("users");
-    dispatch({ type: FETCH_USERS, payload: response.data });
-  } catch (e) {
-    throw e;
-  }
-};
+export const logout = () => (dispatch) => {
+  AuthService.logout();
 
-export { loginUser, registerUser, fetchUsers };
+  dispatch({
+    type: LOGOUT,
+  });
+};
