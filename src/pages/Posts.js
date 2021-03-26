@@ -1,23 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import faker from "faker";
 //redux
 import { fetchPosts } from "../redux/actions/postAction";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
+import { Dropdown } from "semantic-ui-react";
 //source.unsplash.com/400x400?nature/${index}
 
 const Posts = ({ fetchPosts, posts }) => {
+  const [filter, setFilter] = useState("");
+
   useEffect(() => {
     fetchPosts();
   }, []);
 
   return (
     <div className="ui container">
-      <div className="ui cards">
-        {posts.map(({ title, body }, index) => (
-          <Link to="/posts/id">
-            <div class="ui card">
+      <div class="ui secondary  menu">
+        <div class="right menu">
+          <div class="item">
+            <Dropdown text="Filter" icon="filter" floating labeled button className="icon">
+              <Dropdown.Menu>
+                <Dropdown.Header icon="tags" content="Filter by tag" />
+                <Dropdown.Divider />
+                <Dropdown.Item label={{ color: "red", empty: true, circular: true }} text="Important" />
+                <Dropdown.Item label={{ color: "blue", empty: true, circular: true }} text="Announcement" />
+                <Dropdown.Item label={{ color: "black", empty: true, circular: true }} text="Discussion" />
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div className="ui container">
+        <div className="ui cards">
+          {posts.map(({ id, title, body }, index) => (
+            <Link to={`/post/${id}`} className="ui card">
               <div class="content">
                 <div class="header">{title}</div>
               </div>
@@ -34,9 +52,9 @@ const Posts = ({ fetchPosts, posts }) => {
               <div class="extra content">
                 <button class="ui button">Join Project</button>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

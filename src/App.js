@@ -89,7 +89,7 @@ const App = () => {
           )}
         </div>
 
-        <div className="ui container" style={{ marginTop: "100px" }}>
+        <div className="ui container" style={{ position: "relative", margin: "100px" }}>
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
@@ -97,7 +97,7 @@ const App = () => {
             <Route exact path="/profile" component={Profile} />
             <Route path="/users" component={Users} />
             <Route path="/posts" component={Posts} />
-            <Route exact path="/posts/id" component={SinglePost} />
+            <Route path="/post/:id" component={SinglePost} />
           </Switch>
         </div>
         <Footer />
