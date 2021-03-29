@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <div class="ui stackable menu">
       <div class="item">
-        <img src="/images/logo.png" />
+        <img src="/images/logo.png" alt="imagealt" />
       </div>
       <Link className="item" to="/">
         Home

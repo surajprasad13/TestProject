@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Link, Redirect, useHistory, useLocation } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import Posts from "../pages/Posts";
 import Users from "../pages/Users";
 import SinglePost from "../pages/SinglePost";
+import UserPost from "../pages/UserPost";
 
 import { Header, Footer } from "../components";
 
@@ -19,6 +20,7 @@ function HomeRouter() {
         <Route path="/posts" component={Posts} />
         <Route path="/users" component={Users} />
         <Route path="/posts/:id" component={SinglePost} />
+        <Route path="/userpost" component={UserPost} />
       </Switch>
       <Footer />
     </>

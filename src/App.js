@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Router, Switch, Route, Link } from "react-router-dom";
 
@@ -6,7 +6,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import BoardUser from "./pages/BoardUser";
 import Users from "./pages/Users";
 import Posts from "./pages/Posts";
 import SinglePost from "./pages/SinglePost";
@@ -17,11 +16,9 @@ import { logout } from "./redux/actions/authAction";
 import { clearMessage } from "./redux/actions/messageAction";
 
 import { history } from "./helpers/history";
+import UserPost from "./pages/UserPost";
 
 const App = () => {
-  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
-
   const { user: currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -98,6 +95,7 @@ const App = () => {
             <Route path="/users" component={Users} />
             <Route path="/posts" component={Posts} />
             <Route path="/post/:id" component={SinglePost} />
+            <Route path="/userpost/:id" component={UserPost} />
           </Switch>
         </div>
         <Footer />

@@ -15,5 +15,7 @@ export const CLEAR_MESSAGE = "clear_message";
 
 //blogposts
 export const FETCH_POST = "fetch_post";
+export const FILTER_POSTS = "filter_posts";
 export const FETCH_USERS = "fetch_users";
 export const FETCH_SINGLE_POST = "fetch_single_post";
+export const FETCH_USERS_POST = "fetch_users_post";
