@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 //redux
 import { fetchUsersPost } from "../redux/actions/postAction";
@@ -22,9 +22,18 @@ const UserPost = ({ fetchUsersPost, userpost }) => {
       <h1>UserPost{id}</h1>
 
       <div className="ui cards">
-        {userpost.map(({ title, body }) => (
-          <div className="ui card">
+        {userpost.map(({ title, body, userId }, index) => (
+          <Link to={`/post/${id}`} className="ui card" key={index}>
+            <div class="ui move up reveal">
+              <div class="visible content">
+                <img src={`https://source.unsplash.com/400x400?water/${index}`} class="ui large image" />
+              </div>
+              <div class="hidden content">
+                <img src={`https://source.unsplash.com/400x400?nature/${index}`} class="ui large image" />
+              </div>
+            </div>
             <div className="content">
+              <h4>Title</h4>
               <div className="header">{title}</div>
             </div>
             <div className="content">
@@ -38,9 +47,10 @@ const UserPost = ({ fetchUsersPost, userpost }) => {
               </div>
             </div>
             <div className="extra content">
-              <button className="ui button">Join Project</button>
+              <button className="ui button">Id-{id}</button>
+              <button className="ui button">userId-{userId}</button>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

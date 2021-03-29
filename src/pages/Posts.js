@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { Dropdown } from "semantic-ui-react";
 //source.unsplash.com/400x400?nature/${index}
 
+import alt from "../assets/images/alt.png";
+
 const options = [
   { key: 1, text: "UserId", value: "userId" },
   { key: 2, text: "Id", value: "id" },
@@ -14,6 +16,7 @@ const options = [
 ];
 
 const Posts = ({ fetchPosts, filterPosts, posts }) => {
+  const [loading, setLoading] = useState(true);
   const [type, setType] = useState("");
   const [value, setValue] = useState("");
 
@@ -48,7 +51,25 @@ const Posts = ({ fetchPosts, filterPosts, posts }) => {
         <div className="ui cards">
           {posts.map(({ id, userId, title, body }, index) => (
             <Link to={`/post/${id}`} className="ui card" key={index}>
+              {loading && (
+                <div class="ui placeholder">
+                  <div class="square image"></div>
+                </div>
+              )}
+              <div class="ui move up reveal">
+                <div class="visible content">
+                  <img
+                    src={`https://source.unsplash.com/400x400?water/${index}`}
+                    class="ui large image"
+                    onLoad={() => setLoading(false)}
+                  />
+                </div>
+                <div class="hidden content">
+                  <img src={`https://source.unsplash.com/400x400?nature/${index}`} class="ui large image" />
+                </div>
+              </div>
               <div className="content">
+                <h4>Title</h4>
                 <div className="header">{title}</div>
               </div>
               <div className="content">

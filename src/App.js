@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Router, Switch, Route, Link } from "react-router-dom";
 
@@ -37,53 +37,52 @@ const App = () => {
   return (
     <Router history={history}>
       <div>
-        <div className="ui top fixed menu">
-          <div className="ui item">
-            <Link to={"/"} className="ui item">
+        <div className="ui top fixed inverted segment menu">
+          <div className="ui inverted secondary pointing menu">
+            <Link to={"/"} className="active item">
               Suraj Prasad
             </Link>
-          </div>
-          <div className="ui item">
-            <Link to={"/home"} className="ui item">
+
+            <Link to={"/home"} className="item">
               Home
             </Link>
 
             {currentUser && (
               <>
-                <Link to={"/users"} className="ui item">
+                <Link to={"/users"} className="item">
                   Users
                 </Link>
-                <Link to={"/posts"} className="ui item">
+                <Link to={"/posts"} className="item">
                   Posts
                 </Link>
-                <Link to={"/profile"} className="ui item">
+                <Link to={"/profile"} className="item">
                   Profile
                 </Link>
               </>
             )}
+
+            {currentUser ? (
+              <div className="right menu">
+                <Link to={"/profile"} className="ui item">
+                  Suraj
+                </Link>
+
+                <a href="/login" className="item" onClick={logOut}>
+                  LogOut
+                </a>
+              </div>
+            ) : (
+              <div className="right menu">
+                <Link to={"/login"} className="ui item">
+                  Login
+                </Link>
+
+                <Link to={"/register"} className="ui item">
+                  Sign Up
+                </Link>
+              </div>
+            )}
           </div>
-
-          {currentUser ? (
-            <div className="ui item">
-              <Link to={"/profile"} className="ui item">
-                Suraj
-              </Link>
-
-              <a href="/login" className="ui item" onClick={logOut}>
-                LogOut
-              </a>
-            </div>
-          ) : (
-            <div className="ui item">
-              <Link to={"/login"} className="ui item">
-                Login
-              </Link>
-
-              <Link to={"/register"} className="ui item">
-                Sign Up
-              </Link>
-            </div>
-          )}
         </div>
 
         <div className="ui container" style={{ position: "relative", margin: "100px" }}>

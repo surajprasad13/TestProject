@@ -14,13 +14,14 @@ const fetchPosts = () => async (dispatch) => {
 
 const filterPosts = (type, value) => async (dispatch) => {
   try {
+    console.log(type, value);
     dispatch({ type: LOADING });
-    console.log(type);
     const response = await api.get("posts", {
       params: {
-        type: value,
+        [type]: value,
       },
     });
+
     dispatch({ type: FILTER_POSTS, payload: response.data });
   } catch (e) {
     throw e;
@@ -54,7 +55,7 @@ const filterUser = (value) => async (dispatch) => {
       let searchValue = d.name.toLowerCase();
       return searchValue.indexOf(value) != -1;
     });
-    console.log(newArray);
+
     dispatch({ type: FETCH_USERS, payload: newArray });
   } catch (e) {
     throw e;

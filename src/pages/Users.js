@@ -4,6 +4,7 @@ import faker from "faker";
 import { fetchUsers, filterUser } from "../redux/actions/postAction";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { Card } from "../components";
 
 const Users = ({ fetchUsers, users, filterUser }) => {
   const [value, setValue] = useState("");
@@ -21,25 +22,8 @@ const Users = ({ fetchUsers, users, filterUser }) => {
         <button className="ui button">Filter</button>
       </div>
       <div className="ui cards">
-        {users.map(({ id, name, email, address }, index) => (
-          <Link class="ui card" to={`/userpost/${id}`}>
-            <div class="image">
-              <img src={`https://source.unsplash.com/400x400?nature/${index}`} />
-            </div>
-            <div class="content">
-              <a class="header">{name}</a>
-              <div class="meta">
-                <span class="date">{email}</span>
-              </div>
-              <div class="description">{address.street + address.suite + address.city}</div>
-            </div>
-            <div class="extra content">
-              <a>
-                <i class="user icon"></i>
-                22 Friends
-              </a>
-            </div>
-          </Link>
+        {users.map((item, index) => (
+          <Card item={item} index={index} key={index} />
         ))}
       </div>
     </div>

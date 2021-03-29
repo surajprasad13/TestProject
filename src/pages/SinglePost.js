@@ -43,21 +43,31 @@ const SinglePost = ({ post, fetchPost, loading }) => {
         </div>
       ) : (
         <div class="ui card">
-          <div class="content">
-            <div class="header">{post.title}</div>
+          <div class="ui move up reveal">
+            <div class="visible content">
+              <img src={`https://source.unsplash.com/400x400?water/${post.index}`} class="ui large image" />
+            </div>
+            <div class="hidden content">
+              <img src={`https://source.unsplash.com/400x400?nature/${post.index}`} class="ui large image" />
+            </div>
           </div>
-          <div class="content">
-            <h4 class="ui sub header">Description</h4>
-            <div class="ui small feed">
-              <div class="event">
-                <div class="content">
-                  <div class="summary">{post.body}</div>
+          <div className="content">
+            <h4>Title</h4>
+            <div className="header">{post.title}</div>
+          </div>
+          <div className="content">
+            <h4 className="ui sub header">Description</h4>
+            <div className="ui small feed">
+              <div className="event">
+                <div className="content">
+                  <div className="summary">{post.body}</div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="extra content">
-            <button class="ui button">Join Project</button>
+          <div className="extra content">
+            <button className="ui button">Id-{post.id}</button>
+            <button className="ui button">userId-{post.userId}</button>
           </div>
         </div>
       )}

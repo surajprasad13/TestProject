@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div class="ui stackable menu">
+    <div class="ui inverted secondary pointing menu">
       <div class="item">
         <img src="/images/logo.png" alt="imagealt" />
       </div>
